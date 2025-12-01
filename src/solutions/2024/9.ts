@@ -1,6 +1,6 @@
 import { File } from 'buffer';
-import { doInPlaceArrayItemSwap } from '../helpers/arrayItemSwap';
-import { readInput } from '../helpers/readFile';
+import { doInPlaceArrayItemSwap } from '../../helpers/arrayItemSwap';
+import { readInput } from '../../helpers/readFile';
 
 export interface Block {
   id: number | undefined;
@@ -49,7 +49,7 @@ export const calculateDefragmentedChecksum = (layout: Block[]): number => {
 };
 
 export const solution9_1 = async () => {
-  const input = await readInput('../data/9_input.txt');
+  const input = await readInput('../data/2024/9_input.txt');
   const layout = getLayoutFromDiskMap(input);
   const defragmentedLayout = getDefragmentedLayout(layout);
   const checksum = calculateDefragmentedChecksum(defragmentedLayout);
@@ -113,7 +113,7 @@ export const getDefragmentedLayoutWholeFile = (layout: Block[]) => {
 };
 
 export const solution9_2 = async () => {
-  const input = await readInput('../data/9_input.txt');
+  const input = await readInput('../data/2024/9_input.txt');
   const layout = getLayoutFromDiskMap(input);
   const defragmentedLayout = getDefragmentedLayoutWholeFile(layout);
   const checksum = calculateDefragmentedChecksum(defragmentedLayout);

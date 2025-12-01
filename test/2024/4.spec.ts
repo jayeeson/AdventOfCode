@@ -1,11 +1,11 @@
-import { Cell, Direction8Points } from '../src/helpers/map';
-import { readInput } from '../src/helpers/readFile';
+import { Cell, Direction8Points } from '../../src/helpers/map';
+import { readInput } from '../../src/helpers/readFile';
 import {
   countFoundStringsInGrid,
   countXShapedStringsInGrid,
   createStringFromCoordinateAndDirection,
   IPropsStringFromCoordinateAndDirection,
-} from '../src/solutions/4';
+} from '../../src/solutions/2024/4';
 
 const input = `....XXMAS.
 .SAMXMS...
@@ -136,7 +136,7 @@ test('can find XMAS in all directions', () => {
 });
 
 test('can find XMAS in all directions from file', async () => {
-  const fileInput = await readInput('../test/test-data/4_fake_data.txt');
+  const fileInput = await readInput('../test/2024/test-data/4_fake_data.txt');
   const grid = input.split('\n');
 
   const numberXmases = countFoundStringsInGrid('XMAS', grid);

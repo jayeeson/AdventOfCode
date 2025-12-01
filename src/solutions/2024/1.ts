@@ -1,5 +1,5 @@
-import { createFrequencyMap } from '../helpers/createFrequencyMap';
-import { readInput, readNumbersIntoTwoLists } from '../helpers/readFile';
+import { createFrequencyMap } from '../../helpers/createFrequencyMap';
+import { readInput, readNumbersIntoTwoLists } from '../../helpers/readFile';
 
 export function distances(list1: number[], list2: number[]) {
   const list1_sorted = list1.slice().sort();
@@ -28,7 +28,7 @@ export function sumOfArray(numbers: number[]) {
 
 export async function solution1_1() {
   // get the total distance of sorted arrays
-  const input = await readInput('../data/1_input.txt');
+  const input = await readInput('../data/2024/1_input.txt');
   const { list1, list2 } = readNumbersIntoTwoLists(input);
   const d = distances(list1, list2);
   const td = sumOfArray(d);
@@ -51,7 +51,7 @@ export function similarityScores(list1: number[], list2: number[]) {
 
 export async function solution1_2() {
   // get the total distance of sorted arrays
-  const input = await readInput('../data/1_input.txt');
+  const input = await readInput('../data/2024/1_input.txt');
   const { list1, list2 } = readNumbersIntoTwoLists(input);
   const scores = similarityScores(list1, list2);
   const scoreSum = sumOfArray(scores);

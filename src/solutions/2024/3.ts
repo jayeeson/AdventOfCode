@@ -1,4 +1,4 @@
-import { readInput } from '../helpers/readFile';
+import { readInput } from '../../helpers/readFile';
 import { sumOfArray } from './1';
 
 enum MulDoDont {
@@ -34,7 +34,7 @@ export function doMuls(digitArrays: number[][]) {
 }
 
 export async function solution3_1() {
-  const input = await readInput('../data/3_input.txt');
+  const input = await readInput('../data/2024/3_input.txt');
   const mulArrays = extractMuls(input);
   const digitArrays = mulsToDigitArrays(mulArrays);
   const mulResults = doMuls(digitArrays);
@@ -89,7 +89,7 @@ export function getMulsAfterApplyingDosDonts(
 }
 
 export async function solution3_2() {
-  const input = await readInput('../data/3_input.txt');
+  const input = await readInput('../data/2024/3_input.txt');
   const mulArrays = extractMulsDosDonts(input);
   const remainingMuls = getMulsAfterApplyingDosDonts(mulArrays);
   const digitArrays = mulsToDigitArrays(remainingMuls);

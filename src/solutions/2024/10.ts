@@ -5,8 +5,8 @@ import {
   isInMap,
   MapLines,
   Size,
-} from '../helpers/map';
-import { readInput, splitStringAtEOL } from '../helpers/readFile';
+} from '../../helpers/map';
+import { readInput, splitStringAtEOL } from '../../helpers/readFile';
 import { sumOfArray } from './1';
 
 export interface Trail {
@@ -159,7 +159,7 @@ export const getTrailheadScores = (trails: UniqueTrails): number[] => {
 };
 
 export const solution10_1 = async (ratingSystem: 1 | 2 = 1) => {
-  const input = await readInput('../data/10_input.txt');
+  const input = await readInput('../data/2024/10_input.txt');
   const strings = splitStringAtEOL(input);
   const size = getMapSize(strings);
   const possibleTrailheads = findPossibleTrailheads(strings);

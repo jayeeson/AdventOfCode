@@ -1,9 +1,9 @@
 import { Direction } from 'readline';
 import path from 'path';
 import { sumOfArray } from './1';
-import { readInput, splitStringAtEOL } from '../helpers/readFile';
-import { deepEqual } from '../helpers/deepEqual';
-import { Cell, Direction4Points, MapLines } from '../helpers/map';
+import { readInput, splitStringAtEOL } from '../../helpers/readFile';
+import { deepEqual } from '../../helpers/deepEqual';
+import { Cell, Direction4Points, MapLines } from '../../helpers/map';
 
 export interface GuardPosition {
   position: Cell;
@@ -199,7 +199,7 @@ export const countNumberFinalGuardPositions = (
 };
 
 export const solution6_1 = async () => {
-  const input = await readInput('../data/6_input.txt');
+  const input = await readInput('../data/2024/6_input.txt');
   const lines = splitStringAtEOL(input);
   drawMaxLinePath(lines);
   const numberPositions = countNumberFinalGuardPositions(lines);
@@ -233,7 +233,7 @@ export const findNumberOfLoopablePositions = (
 };
 
 export const solution6_2 = async () => {
-  const input = await readInput('../data/6_input.txt');
+  const input = await readInput('../data/2024/6_input.txt');
   const lines = splitStringAtEOL(input);
   const maxCount = input.length;
   const numberLoopablePositions = findNumberOfLoopablePositions(

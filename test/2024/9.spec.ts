@@ -1,11 +1,11 @@
-import { readInput } from '../src/helpers/readFile';
+import { readInput } from '../../src/helpers/readFile';
 import {
   Block,
   calculateDefragmentedChecksum,
   getDefragmentedLayout,
   getDefragmentedLayoutWholeFile,
   getLayoutFromDiskMap,
-} from '../src/solutions/9';
+} from '../../src/solutions/2024/9';
 
 const testInput1 = '12345';
 const layout1 = '0..111....22222'; // dots are free space

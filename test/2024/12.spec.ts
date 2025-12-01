@@ -1,12 +1,12 @@
-import { Cell, getMapSize } from '../src/helpers/map';
-import { splitStringAtEOL } from '../src/helpers/readFile';
+import { Cell, getMapSize } from '../../src/helpers/map';
+import { splitStringAtEOL } from '../../src/helpers/readFile';
 import {
   findAllDonuts,
   GardenRegionCells,
   getAllRegionInfo,
   getGardenFencePriceInfo,
   recursivelyGetRegionCells,
-} from '../src/solutions/12';
+} from '../../src/solutions/2024/12';
 
 const inputs = [
   {

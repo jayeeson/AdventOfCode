@@ -4,9 +4,9 @@ import {
   CALCULATION_OPERATORS_2,
   isValidCalculation,
   stringToCalculation,
-} from '../src/solutions/7';
-import { splitStringAtEOL } from '../src/helpers/readFile';
-import { sumOfArray } from '../src/solutions/1';
+} from '../../src/solutions/2024/7';
+import { splitStringAtEOL } from '../../src/helpers/readFile';
+import { sumOfArray } from '../../src/solutions/2024/1';
 
 test('can evaluate left to right', () => {
   const testInput = '292: 11 6 16 20';

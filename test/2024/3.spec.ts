@@ -1,11 +1,11 @@
-import { sumOfArray } from '../src/solutions/1';
+import { sumOfArray } from '../../src/solutions/2024/1';
 import {
   doMuls,
   extractMuls,
   extractMulsDosDonts,
   getMulsAfterApplyingDosDonts,
   mulsToDigitArrays,
-} from '../src/solutions/3';
+} from '../../src/solutions/2024/3';
 
 test('can parse out everything except mul(1,2) instructions', () => {
   const testInput =

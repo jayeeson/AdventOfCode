@@ -1,8 +1,14 @@
 // 1. create a map of locations of unique frequency antennas
 // 2.
 
-import { Cell, getCellDiff, getMapSize, isInMap, Size } from '../helpers/map';
-import { readInput, splitStringAtEOL } from '../helpers/readFile';
+import {
+  Cell,
+  getCellDiff,
+  getMapSize,
+  isInMap,
+  Size,
+} from '../../helpers/map';
+import { readInput, splitStringAtEOL } from '../../helpers/readFile';
 
 export interface AntennaLocations {
   [key: string | number]: Cell[];
@@ -94,7 +100,7 @@ export const createMapOfAllAntinodeLocations = (
 };
 
 export const solution8_1 = async () => {
-  const input = await readInput('../data/8_input.txt');
+  const input = await readInput('../data/2024/8_input.txt');
   const inputStrings = splitStringAtEOL(input);
   const antennaLocations = getAntennaLocations(inputStrings);
   const mapSize = getMapSize(inputStrings);
@@ -106,7 +112,7 @@ export const solution8_1 = async () => {
 };
 
 export const solution8_2 = async () => {
-  const input = await readInput('../data/8_input.txt');
+  const input = await readInput('../data/2024/8_input.txt');
   const inputStrings = splitStringAtEOL(input);
   const antennaLocations = getAntennaLocations(inputStrings);
   const mapSize = getMapSize(inputStrings);

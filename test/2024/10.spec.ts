@@ -1,16 +1,16 @@
-import { getMapSize } from '../src/helpers/map';
+import { getMapSize } from '../../src/helpers/map';
 import {
   readDigitsIntoLists,
   readLinesIntoLists,
   splitStringAtEOL,
-} from '../src/helpers/readFile';
-import { sumOfArray } from '../src/solutions/1';
+} from '../../src/helpers/readFile';
+import { sumOfArray } from '../../src/solutions/2024/1';
 import {
   findAllTrailheads,
   findPossibleTrailheads,
   getTrailheadNewRatingScores,
   getTrailheadScores,
-} from '../src/solutions/10';
+} from '../../src/solutions/2024/10';
 
 const simpleTrailInput = `1110111
 1111111

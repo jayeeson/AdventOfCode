@@ -1,4 +1,4 @@
-import { readInput, readLinesIntoLists } from '../helpers/readFile';
+import { readInput, readLinesIntoLists } from '../../helpers/readFile';
 
 const DEBUG = false;
 
@@ -118,14 +118,14 @@ export function numberThatChangeGradually(
 }
 
 export async function solution2_1() {
-  const input = await readInput('../data/2_input.txt');
+  const input = await readInput('../data/2024/2_input.txt');
   const numberLists = readLinesIntoLists(input);
   const numberSafe = numberThatChangeGradually(numberLists);
   return numberSafe;
 }
 
 export async function solution2_2() {
-  const input = await readInput('../data/2_input.txt');
+  const input = await readInput('../data/2024/2_input.txt');
   const numberLists = readLinesIntoLists(input);
   const numberSafe = numberThatChangeGradually(numberLists, true);
   return numberSafe;

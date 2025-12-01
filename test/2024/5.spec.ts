@@ -1,4 +1,4 @@
-import { readLinesIntoLists } from '../src/helpers/readFile';
+import { readLinesIntoLists } from '../../src/helpers/readFile';
 import {
   convertOrderingRulesStringToRecords,
   getInvalidUpdates,
@@ -9,7 +9,7 @@ import {
   reorderInvalidUpdate,
   sortOrderingRuleRecords,
   validateUpdateLineWithRules,
-} from '../src/solutions/5';
+} from '../../src/solutions/2024/5';
 
 const orderingRulesInput = `47|53
 97|13
@@ -97,7 +97,7 @@ test('can return middle numbers of all updates', () => {
 
 test('read file input can parse into rules and updates', async () => {
   const { rules, updates } = await getRulesAndUpdatesFromFile(
-    '../test/test-data/5_fake_data.txt'
+    '../test/2024/test-data/5_fake_data.txt'
   );
   expect(rules).toBe(orderingRulesInput);
   expect(updates).toBe(updatesInput);

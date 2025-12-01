@@ -1,5 +1,5 @@
-import { doInPlaceArrayItemSwap } from '../helpers/arrayItemSwap';
-import { readInput, readLinesIntoLists } from '../helpers/readFile';
+import { doInPlaceArrayItemSwap } from '../../helpers/arrayItemSwap';
+import { readInput, readLinesIntoLists } from '../../helpers/readFile';
 import { sumOfArray } from './1';
 
 export type OrderingRulesRecords = Record<number, number[]>;
@@ -103,7 +103,7 @@ export const getRulesAndUpdatesFromFile = async (
 
 export const solution5_1 = async () => {
   const { rules, updates: updatesString } = await getRulesAndUpdatesFromFile(
-    '../data/5_input.txt'
+    '../data/2024/5_input.txt'
   );
   const ruleRecords = convertOrderingRulesStringToRecords(rules);
   const updates = readLinesIntoLists(updatesString);
@@ -152,7 +152,7 @@ export const reorderInvalidUpdate = (
 
 export const solution5_2 = async () => {
   const { rules, updates: updatesString } = await getRulesAndUpdatesFromFile(
-    '../data/5_input.txt'
+    '../data/2024/5_input.txt'
   );
   const ruleRecords = convertOrderingRulesStringToRecords(rules);
   const updates = readLinesIntoLists(updatesString);

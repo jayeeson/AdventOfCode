@@ -1,4 +1,4 @@
-import { readInput, splitStringAtEOL } from '../helpers/readFile';
+import { readInput, splitStringAtEOL } from '../../helpers/readFile';
 import { sumOfArray } from './1';
 
 export interface Calculation {
@@ -111,7 +111,7 @@ export const isValidCalculation = (
 };
 
 export const solution7_1 = async () => {
-  const input = await readInput('../data/7_input.txt');
+  const input = await readInput('../data/2024/7_input.txt');
   const calculationStrings = splitStringAtEOL(input);
   const calculations: Calculation[] = calculationStrings.map((calc) =>
     stringToCalculation(calc)
@@ -126,7 +126,7 @@ export const solution7_1 = async () => {
 };
 
 export const solution7_2 = async () => {
-  const input = await readInput('../data/7_input.txt');
+  const input = await readInput('../data/2024/7_input.txt');
   const calculationStrings = splitStringAtEOL(input);
   const calculations: Calculation[] = calculationStrings.map((calc) =>
     stringToCalculation(calc)

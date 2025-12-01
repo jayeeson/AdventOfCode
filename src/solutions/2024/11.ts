@@ -1,4 +1,4 @@
-import { readInput, readInputStringIntoNumbers } from '../helpers/readFile';
+import { readInput, readInputStringIntoNumbers } from '../../helpers/readFile';
 
 export interface StoneValuesDict {
   [key: number]: number;
@@ -74,7 +74,7 @@ export const applyStoneFunctionManyTimes = (
 };
 
 export const solution11_1 = async () => {
-  const input = await readInput('../data/11_input.txt');
+  const input = await readInput('../data/2024/11_input.txt');
   const nums = readInputStringIntoNumbers(input);
   const result = applyStoneFunctionManyTimes(nums, 25);
   return result.length;
@@ -127,7 +127,7 @@ export const getNumberOfStonesFromDict = (dict: StoneValuesDict) => {
 };
 
 export const solution11_2 = async () => {
-  const input = await readInput('../data/11_input.txt');
+  const input = await readInput('../data/2024/11_input.txt');
   const numsList = readInputStringIntoNumbers(input);
   let dict = {};
   addListToStoneValuesDict(numsList, dict);

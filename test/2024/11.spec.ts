@@ -1,4 +1,4 @@
-import { readInputStringIntoNumbers } from '../src/helpers/readFile';
+import { readInputStringIntoNumbers } from '../../src/helpers/readFile';
 import {
   addListToStoneValuesDict,
   applyStoneFunctionManyTimes,
@@ -6,7 +6,7 @@ import {
   applyStoneFunctionToDictManyTimes,
   applyStoneFunctionToList,
   getNumberOfStonesFromDict,
-} from '../src/solutions/11';
+} from '../../src/solutions/2024/11';
 
 test('rules work', () => {
   const input = '125 17';

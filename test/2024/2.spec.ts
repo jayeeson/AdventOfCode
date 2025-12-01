@@ -1,4 +1,4 @@
-import { numberThatChangeGradually } from '../src/solutions/2';
+import { numberThatChangeGradually } from '../../src/solutions/2024/2';
 
 const lists = [
   [7, 6, 4, 2, 1],

@@ -1,4 +1,4 @@
-import { deepEqual } from '../helpers/deepEqual';
+import { deepEqual } from '../../helpers/deepEqual';
 import {
   Cell,
   cellToString,
@@ -9,8 +9,8 @@ import {
   getMapSize,
   isInMap,
   Size,
-} from '../helpers/map';
-import { readInput, splitStringAtEOL } from '../helpers/readFile';
+} from '../../helpers/map';
+import { readInput, splitStringAtEOL } from '../../helpers/readFile';
 import { sumOfArray } from './1';
 import { Direction4PointsArray } from './10';
 
@@ -473,7 +473,7 @@ export const getGardenFencePriceInfo = (
 };
 
 export const solution12_1 = async (usePerimeter: boolean = true) => {
-  const input = await readInput('../data/12_input.txt');
+  const input = await readInput('../data/2024/12_input.txt');
   const lines = splitStringAtEOL(input);
   const regionInfo = getAllRegionInfo(lines, !usePerimeter);
   const totalPrice = getGardenFencePriceInfo(regionInfo, usePerimeter);

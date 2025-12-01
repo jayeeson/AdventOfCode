@@ -1,4 +1,8 @@
-import { distances, similarityScores, sumOfArray } from '../src/solutions/1';
+import {
+  distances,
+  similarityScores,
+  sumOfArray,
+} from '../../src/solutions/2024/1';
 
 const list1 = [3, 4, 2, 1, 3, 3];
 const list2 = [4, 3, 5, 3, 9, 3];

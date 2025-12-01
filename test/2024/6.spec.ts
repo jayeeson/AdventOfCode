@@ -1,5 +1,5 @@
-import { Direction4Points } from '../src/helpers/map';
-import { splitStringAtEOL } from '../src/helpers/readFile';
+import { Direction4Points } from '../../src/helpers/map';
+import { splitStringAtEOL } from '../../src/helpers/readFile';
 import {
   countNumberFinalGuardPositions,
   drawMaxLinePath,
@@ -8,8 +8,8 @@ import {
   getGuardPosition,
   inferDirection,
   solution6_2,
-} from '../src/solutions/6';
-import { fail } from './helpers/testUtils';
+} from '../../src/solutions/2024/6';
+import { fail } from '../helpers/testUtils';
 
 const testInput = `....#.....
 .........#

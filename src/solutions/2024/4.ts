@@ -1,6 +1,6 @@
-import { arrayIncludesDeep } from '../helpers/deepEqual';
-import { Cell, Direction8Points, Size } from '../helpers/map';
-import { readInput } from '../helpers/readFile';
+import { arrayIncludesDeep } from '../../helpers/deepEqual';
+import { Cell, Direction8Points, Size } from '../../helpers/map';
+import { readInput } from '../../helpers/readFile';
 
 export function countFoundStringsInGrid(stringToFind: string, grid: string[]) {
   let found = 0;
@@ -129,7 +129,7 @@ export function createStringFromCoordinateAndDirection({
 }
 
 export async function solution4_1() {
-  const fileInput = await readInput('../data/4_input.txt');
+  const fileInput = await readInput('../data/2024/4_input.txt');
   const grid = fileInput.split('\n');
   const numberXmases = countFoundStringsInGrid('XMAS', grid);
   return numberXmases;
@@ -180,7 +180,7 @@ export function countXShapedStringsInGrid(
 }
 
 export async function solution4_2() {
-  const fileInput = await readInput('../data/4_input.txt');
+  const fileInput = await readInput('../data/2024/4_input.txt');
   const grid = fileInput.split('\n');
   const numberXmases = countXShapedStringsInGrid('MAS', grid);
   return numberXmases;

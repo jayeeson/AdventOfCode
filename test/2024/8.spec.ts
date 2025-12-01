@@ -1,11 +1,11 @@
-import { getCellDiff, getMapSize } from '../src/helpers/map';
-import { splitStringAtEOL } from '../src/helpers/readFile';
+import { getCellDiff, getMapSize } from '../../src/helpers/map';
+import { splitStringAtEOL } from '../../src/helpers/readFile';
 import {
   AntinodeLocations,
   createMapOfAllAntinodeLocations,
   getAntennaLocations,
   getAntinodesOfLocations,
-} from '../src/solutions/8';
+} from '../../src/solutions/2024/8';
 
 const testInput1 = `............
 ........0...
