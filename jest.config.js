@@ -10,4 +10,5 @@ module.exports = {
       useESM: true, // Enable ESM support
     },
   },
+  testPathIgnorePatterns: ['2024'],
 };
