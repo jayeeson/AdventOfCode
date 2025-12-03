@@ -1,3 +1,5 @@
+import { it, expect } from 'vitest';
+
 import { numberThatChangeGradually } from '../../src/solutions/2024/2';
 
 const lists = [
@@ -14,12 +16,12 @@ const lists = [
   [63, 60, 62, 65, 67, 69],
 ];
 
-test('for gradual changes', () => {
+it('for gradual changes', () => {
   const numberSafe = numberThatChangeGradually(lists);
   expect(numberSafe).toBe(2);
 });
 
-test('for gradual changes with dampener', () => {
+it('for gradual changes with dampener', () => {
   const numberSafe = numberThatChangeGradually(lists, true);
   expect(numberSafe).toBe(9);
 });

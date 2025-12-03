@@ -6,6 +6,7 @@ import {
   getDefragmentedLayoutWholeFile,
   getLayoutFromDiskMap,
 } from '../../src/solutions/2024/9';
+import { it, expect } from 'vitest';
 
 const testInput1 = '12345';
 const layout1 = '0..111....22222'; // dots are free space
@@ -76,7 +77,7 @@ const expected2 = [
 // 1. move blocks from right side to left side free space.
 // 2. create new checksum: sum of block position * original file id
 
-test.each([{ input: testInput1, expected: layout1prime }])(
+it.each([{ input: testInput1, expected: layout1prime }])(
   'can get filespace representation of disk map',
   ({ input, expected }) => {
     const layout = getLayoutFromDiskMap(input);
@@ -84,7 +85,7 @@ test.each([{ input: testInput1, expected: layout1prime }])(
   }
 );
 
-test.each([
+it.each([
   { input: testInput1, expected: expected1 },
   { input: testInput2, expected: expected2 },
 ])('can defragment', ({ input, expected }) => {
@@ -93,7 +94,7 @@ test.each([
   expect(defragmentedLayout).toMatchObject(expected);
 });
 
-test('can compute checksum', () => {
+it('can compute checksum', () => {
   const layout = getLayoutFromDiskMap(testInput2);
   const defragmentedLayout = getDefragmentedLayout(layout);
   const checksum = calculateDefragmentedChecksum(defragmentedLayout);
@@ -145,7 +146,7 @@ const expectedWholeFile = [
   { id: undefined },
 ];
 
-test.each([
+it.each([
   { input: testInput2, expected: expectedWholeFile, expectedChecksum: 2858 },
   {
     input: '122',

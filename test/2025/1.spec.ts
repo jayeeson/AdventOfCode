@@ -4,6 +4,7 @@ import {
   VaultSafeTurn,
   countAllClickByZeros,
 } from '../../src/solutions/2025/1';
+import { it, expect } from 'vitest';
 
 const DEBUG = false;
 

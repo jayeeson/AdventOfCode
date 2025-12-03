@@ -7,6 +7,7 @@ import {
   getGardenFencePriceInfo,
   recursivelyGetRegionCells,
 } from '../../src/solutions/2024/12';
+import { it, expect } from 'vitest';
 
 const inputs = [
   {
@@ -180,7 +181,7 @@ AAB`,
   },
 ];
 
-test.each(inputs)(
+it.each(inputs)(
   'get correct perimeters, areas, prices, %s',
   ({
     input,
@@ -200,7 +201,7 @@ test.each(inputs)(
   }
 );
 
-test('find all donuts', () => {
+it('find all donuts', () => {
   const input = `OOO
 OXO
 OOO`;

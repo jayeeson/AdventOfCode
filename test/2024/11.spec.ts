@@ -7,8 +7,9 @@ import {
   applyStoneFunctionToList,
   getNumberOfStonesFromDict,
 } from '../../src/solutions/2024/11';
+import { it, expect } from 'vitest';
 
-test('rules work', () => {
+it('rules work', () => {
   const input = '125 17';
   const nums1 = readInputStringIntoNumbers(input);
   const { newValues: nums2 } = applyStoneFunctionToList(nums1);
@@ -31,14 +32,14 @@ test('rules work', () => {
   expect(nums7.length).toBe(22);
 });
 
-test('run rules X times', () => {
+it('run rules X times', () => {
   const input = '125 17';
   const nums1 = readInputStringIntoNumbers(input);
   const result = applyStoneFunctionManyTimes(nums1, 6);
   expect(result.length).toBe(22);
 });
 
-test('addListToStoneValuesDict', () => {
+it('addListToStoneValuesDict', () => {
   const input = '1 1 2 3';
   const numsList = readInputStringIntoNumbers(input);
   const dict = {};
@@ -50,7 +51,7 @@ test('addListToStoneValuesDict', () => {
   });
 });
 
-test('applyStoneFunctionToDict', () => {
+it('applyStoneFunctionToDict', () => {
   const input = '512072 1 20 24 28676032';
   const numsList = readInputStringIntoNumbers(input);
   const dict = {};
@@ -68,7 +69,7 @@ test('applyStoneFunctionToDict', () => {
   });
 });
 
-test('applyStoneFunctionToDictManyTimes', () => {
+it('applyStoneFunctionToDictManyTimes', () => {
   const input = '125 17';
   const numsList = readInputStringIntoNumbers(input);
   let dict = {};

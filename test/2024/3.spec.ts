@@ -6,8 +6,9 @@ import {
   getMulsAfterApplyingDosDonts,
   mulsToDigitArrays,
 } from '../../src/solutions/2024/3';
+import { it, expect } from 'vitest';
 
-test('can parse out everything except mul(1,2) instructions', () => {
+it('can parse out everything except mul(1,2) instructions', () => {
   const testInput =
     'xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))';
 
@@ -25,7 +26,7 @@ test('can parse out everything except mul(1,2) instructions', () => {
   expect(resultSum).toBe(161);
 });
 
-test("can parse: [do(), don't, mul(1,2)] instructions", () => {
+it("can parse: [do(), don't, mul(1,2)] instructions", () => {
   const testInput =
     "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))";
   const instructions = extractMulsDosDonts(testInput);

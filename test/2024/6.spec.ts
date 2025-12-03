@@ -10,6 +10,7 @@ import {
   solution6_2,
 } from '../../src/solutions/2024/6';
 import { fail } from '../helpers/testUtils';
+import { it, expect } from 'vitest';
 
 const testInput = `....#.....
 .........#
@@ -34,13 +35,13 @@ const expectedPathAtExit = `....#.....
 ......#X..`;
 const expectedNumberDistinctPositions = 41;
 
-test("can find guard's position", () => {
+it("can find guard's position", () => {
   const lines = splitStringAtEOL(testInput);
   const position = getGuardPosition(lines);
   expect(position).toMatchObject({ x: 4, y: 6 });
 });
 
-test("can infer guard's starting direction", () => {
+it("can infer guard's starting direction", () => {
   const lines = splitStringAtEOL(testInput);
   const position = getGuardPosition(lines);
   expect(position).not.toBeNull();
@@ -48,7 +49,7 @@ test("can infer guard's starting direction", () => {
   expect(startingDirection).toBe(Direction4Points.NORTH);
 });
 
-test('can get max position before hitting an obstacle', () => {
+it('can get max position before hitting an obstacle', () => {
   const lines = splitStringAtEOL(testInput);
   const position = getGuardPosition(lines);
   const startingDirection = inferDirection(position, lines);
@@ -77,7 +78,7 @@ test('can get max position before hitting an obstacle', () => {
   expect(lines).toEqual(expectedNewMap);
 });
 
-test.each([
+it.each([
   { input: testInput, expected: expectedPathAtExit, numPositions: 41 },
   { input: `.<.`, expected: 'XX.', numPositions: 2 },
   { input: '.\nv\n.', expected: '.\nX\nX', numPositions: 2 },
@@ -94,13 +95,13 @@ test.each([
   expect;
 });
 
-test('can count total loopable positions with addition of single obstacle', () => {
+it('can count total loopable positions with addition of single obstacle', () => {
   const lines = splitStringAtEOL(testInput);
   const numberLoops = findNumberOfLoopablePositions(lines);
   expect(numberLoops).toBe(6);
 });
 
-test('handles a corner ok', () => {
+it('handles a corner ok', () => {
   const input = `..#..
 .#.#.
 .....

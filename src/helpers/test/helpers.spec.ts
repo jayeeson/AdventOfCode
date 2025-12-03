@@ -6,12 +6,14 @@ import {
   readNumbersIntoTwoLists,
 } from '../readFile';
 
-test('readinput works for one line', async () => {
+import { describe, it, expect } from 'vitest';
+
+it('readinput works for one line', async () => {
   const input = await readInput('helpers/test/test-data/oneline_data.txt');
   expect(input).toBe('123');
 });
 
-test('readNumbersTwoLists works', async () => {
+it('readNumbersTwoLists works', async () => {
   const expect1 = [31594, 46608, 78052, 52680, 92973];
   const expect2 = [93577, 24099, 70524, 49933, 56887];
 
@@ -21,7 +23,7 @@ test('readNumbersTwoLists works', async () => {
   expect(list2).toEqual(expect2);
 });
 
-test('create frequency map retuns correct numbers', () => {
+it('create frequency map retuns correct numbers', () => {
   const data = [4, 3, 5, 3, 9, 3];
   const map = createFrequencyMap(data);
   expect(map).toMatchObject({
@@ -32,7 +34,7 @@ test('create frequency map retuns correct numbers', () => {
   });
 });
 
-test('read lines into number lists', async () => {
+it('read lines into number lists', async () => {
   const expected = [
     [7, 6, 4, 2, 1],
     [1, 2, 7, 8, 9],
@@ -47,7 +49,7 @@ test('read lines into number lists', async () => {
   expect(numberLists).toEqual(expected);
 });
 
-test('can swap inside array', () => {
+it('can swap inside array', () => {
   const array = [1, 2, 3];
   doInPlaceArrayItemSwap(array, 0, 2);
   expect(array).toEqual([3, 2, 1]);

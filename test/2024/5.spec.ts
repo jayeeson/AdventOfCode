@@ -10,6 +10,7 @@ import {
   sortOrderingRuleRecords,
   validateUpdateLineWithRules,
 } from '../../src/solutions/2024/5';
+import { it, expect } from 'vitest';
 
 const orderingRulesInput = `47|53
 97|13
@@ -40,7 +41,7 @@ const updatesInput = `75,47,61,53,29
 61,13,29
 97,13,75,29,47`;
 
-test('can turnOrderingRules to array Record<number, number[]>[]', () => {
+it('can turnOrderingRules to array Record<number, number[]>[]', () => {
   const recordArray = convertOrderingRulesStringToRecords(orderingRulesInput);
   const sortedRecordArray = sortOrderingRuleRecords(recordArray);
 
@@ -56,7 +57,7 @@ test('can turnOrderingRules to array Record<number, number[]>[]', () => {
   expect(sortedRecordArray).toMatchObject(expectedObjectSorted);
 });
 
-test('can convert update strings to PageNumberUpdates', () => {
+it('can convert update strings to PageNumberUpdates', () => {
   const updates = readLinesIntoLists(updatesInput);
   const expectedUpdates: PageNumberUpdate[] = [
     [75, 47, 61, 53, 29],
@@ -69,7 +70,7 @@ test('can convert update strings to PageNumberUpdates', () => {
   expect(updates).toEqual(expectedUpdates);
 });
 
-test.each<{
+it.each<{
   update: PageNumberUpdate;
   expected: Partial<PageNumberValidation>;
 }>([
@@ -88,14 +89,14 @@ test.each<{
   }
 );
 
-test('can return middle numbers of all updates', () => {
+it('can return middle numbers of all updates', () => {
   const rules = convertOrderingRulesStringToRecords(orderingRulesInput);
   const updates = readLinesIntoLists(updatesInput);
   const middleNumbers = getMiddleNumbersFromUpdates(updates, rules);
   expect(middleNumbers).toEqual([61, 53, 29]);
 });
 
-test('read file input can parse into rules and updates', async () => {
+it('read file input can parse into rules and updates', async () => {
   const { rules, updates } = await getRulesAndUpdatesFromFile(
     '../test/2024/test-data/5_fake_data.txt'
   );
@@ -103,7 +104,7 @@ test('read file input can parse into rules and updates', async () => {
   expect(updates).toBe(updatesInput);
 });
 
-test.each([
+it.each([
   { input: [75, 97, 47, 61, 53], expected: [97, 75, 47, 61, 53] },
   { input: [61, 13, 29], expected: [61, 29, 13] },
   { input: [97, 13, 75, 29, 47], expected: [97, 75, 47, 29, 13] },
@@ -113,7 +114,7 @@ test.each([
   expect(reorderedUpdate).toEqual(expected);
 });
 
-test('can get invalid updates', () => {
+it('can get invalid updates', () => {
   const expectedInvalidUpdates = [
     [75, 97, 47, 61, 53],
     [61, 13, 29],

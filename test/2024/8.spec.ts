@@ -6,6 +6,7 @@ import {
   getAntennaLocations,
   getAntinodesOfLocations,
 } from '../../src/solutions/2024/8';
+import { it, expect } from 'vitest';
 
 const testInput1 = `............
 ........0...
@@ -20,7 +21,7 @@ const testInput1 = `............
 ............
 ............`;
 
-test('can map all antennas', () => {
+it('can map all antennas', () => {
   const inputStrings = splitStringAtEOL(testInput1);
   const antennaLocations = getAntennaLocations(inputStrings);
   expect(antennaLocations).toMatchObject({
@@ -38,7 +39,7 @@ test('can map all antennas', () => {
   });
 });
 
-test.each([
+it.each([
   `....
 ..a.
 .a..
@@ -54,7 +55,7 @@ test.each([
   expect(diff).toMatchObject({ x: -1, y: 1 });
 });
 
-test.each([
+it.each([
   {
     input: `....
 ..a.
@@ -116,7 +117,7 @@ const expectedSetOfAntinodes: AntinodeLocations = {
 };
 
 // final Q: how many unique locations contain antinodes in the map?
-test('can find all antinodes', () => {
+it('can find all antinodes', () => {
   const inputStrings = splitStringAtEOL(testInput1);
   const antennaLocations = getAntennaLocations(inputStrings);
   const mapSize = getMapSize(inputStrings);
@@ -128,7 +129,7 @@ test('can find all antinodes', () => {
   expect(allAntinodes).toMatchObject(expectedSetOfAntinodes);
 });
 
-test('can find all antinodes, taking resonant harmonics into effect', () => {
+it('can find all antinodes, taking resonant harmonics into effect', () => {
   const testInput = `T....#....
 ...T......
 .T....#...

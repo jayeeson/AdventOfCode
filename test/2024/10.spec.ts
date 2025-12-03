@@ -11,6 +11,7 @@ import {
   getTrailheadNewRatingScores,
   getTrailheadScores,
 } from '../../src/solutions/2024/10';
+import { it, expect } from 'vitest';
 
 const simpleTrailInput = `1110111
 1111111
@@ -29,7 +30,7 @@ const trailInput2 = `89010123
 01329801
 10456732`;
 
-test('can find trails', () => {
+it('can find trails', () => {
   const strings = splitStringAtEOL(simpleTrailInput);
   const size = getMapSize(strings);
   const possibleTrailheads = findPossibleTrailheads(strings);
@@ -41,7 +42,7 @@ test('can find trails', () => {
   expect(trailEndsOfFirstTrailHead.length).toBe(2);
 });
 
-test.each([
+it.each([
   {
     input: simpleTrailInput,
     expected: 2,

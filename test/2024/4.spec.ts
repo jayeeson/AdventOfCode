@@ -6,6 +6,7 @@ import {
   createStringFromCoordinateAndDirection,
   IPropsStringFromCoordinateAndDirection,
 } from '../../src/solutions/2024/4';
+import { it, expect } from 'vitest';
 
 const input = `....XXMAS.
 .SAMXMS...
@@ -24,7 +25,7 @@ interface TestCase1 {
   expected: string | undefined;
 }
 
-test.each<TestCase1>([
+it.each<TestCase1>([
   { cell: { x: 3, y: 3 }, direction: Direction8Points.NORTH, expected: '.SM.' },
   {
     cell: { x: 3, y: 2 },
@@ -129,13 +130,13 @@ test.each<TestCase1>([
   expect(foundString).toBe(testCase.expected);
 });
 
-test('can find XMAS in all directions', () => {
+it('can find XMAS in all directions', () => {
   const grid = input.split('\n');
   const numberXmases = countFoundStringsInGrid('XMAS', grid);
   expect(numberXmases).toBe(18);
 });
 
-test('can find XMAS in all directions from file', async () => {
+it('can find XMAS in all directions from file', async () => {
   const fileInput = await readInput('../test/2024/test-data/4_fake_data.txt');
   const grid = input.split('\n');
 
@@ -143,7 +144,7 @@ test('can find XMAS in all directions from file', async () => {
   expect(numberXmases).toBe(18);
 });
 
-test('can find x shaped MAS', () => {
+it('can find x shaped MAS', () => {
   const testInput = `.M.S......
 ..A..MSMS.
 .M.S.MAA..

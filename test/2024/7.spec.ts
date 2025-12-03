@@ -7,15 +7,16 @@ import {
 } from '../../src/solutions/2024/7';
 import { splitStringAtEOL } from '../../src/helpers/readFile';
 import { sumOfArray } from '../../src/solutions/2024/1';
+import { it, expect } from 'vitest';
 
-test('can evaluate left to right', () => {
+it('can evaluate left to right', () => {
   const testInput = '292: 11 6 16 20';
   const calc = stringToCalculation(testInput);
   const isValid = isValidCalculation(calc, CALCULATION_OPERATORS_1);
   expect(isValid.valid).toBe(true);
 });
 
-test('can find possible valid calculations using add and multiply', () => {
+it('can find possible valid calculations using add and multiply', () => {
   const input = `190: 10 19
 3267: 81 40 27
 83: 17 5
@@ -42,7 +43,7 @@ test('can find possible valid calculations using add and multiply', () => {
   expect(calibrationResult).toBe(3749);
 });
 
-test('can find possible valid calculations using concatenator', () => {
+it('can find possible valid calculations using concatenator', () => {
   const input = `156: 15 6
 7290: 6 8 6 15
 192: 17 8 14`;
