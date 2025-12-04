@@ -3,7 +3,7 @@ import path from 'path';
 import { sumOfArray } from './1';
 import { readInput, splitStringAtEOL } from '../../helpers/readFile';
 import { deepEqual } from '../../helpers/deepEqual';
-import { Cell, Direction4Points, MapLines } from '../../helpers/map';
+import { Cell, Direction4Points, drawOnMap, MapLines } from '../../helpers/map';
 
 export interface GuardPosition {
   position: Cell;
@@ -38,20 +38,6 @@ export const inferDirection = (position: Cell | null, mapLines: MapLines) => {
     default:
       throw new Error('Impossible case...');
   }
-};
-
-export const drawOnMap = (
-  { x, y }: Cell,
-  map: MapLines,
-  characterToDraw: string = 'X'
-) => {
-  if (characterToDraw.length !== 1) {
-    throw new Error('must draw character with length 1');
-  }
-  const newLine =
-    map[y].substring(0, x) + characterToDraw + map[y].substring(x + 1);
-  map[y][x];
-  map[y] = newLine;
 };
 
 export const findNextObstacleOrExitAndUpdateMap = (

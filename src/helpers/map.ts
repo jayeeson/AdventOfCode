@@ -1,3 +1,15 @@
+/*
+ *    Coordinate system
+ *    ┌--------------> +x
+ *    |
+ *    |
+ *    |
+ *    |
+ *    |
+ *    v
+ *    +y
+ */
+
 export interface Size {
   width: number;
   height: number;
@@ -28,6 +40,15 @@ export enum Direction8Points {
   SOUTHWEST,
   LENGTH,
 }
+
+export const castIntegerToDirection8 = (value: number): Direction8Points => {
+  const ensureInteger = Math.trunc(value);
+  if (ensureInteger < 0 || ensureInteger > 7 || isNaN(ensureInteger)) {
+    throw new Error(`cannot convert integer to enum ${ensureInteger}`);
+  }
+
+  return ensureInteger as Direction8Points;
+};
 
 export const getMapSize = <T extends string | number[]>(input: T[]): Size => {
   if (input.length < 1 && input[0].length < 1) {
@@ -62,18 +83,26 @@ export const getCellDiff = (cell1: Cell, cell2: Cell): Cell => {
 };
 
 export const getCellOneAwayByDirection = (
-  direction: Direction4Points,
+  direction: Direction4Points | Direction8Points,
   position: Cell
 ) => {
   switch (direction) {
-    case Direction4Points.NORTH:
+    case Direction8Points.NORTH:
       return { x: position.x, y: position.y - 1 };
-    case Direction4Points.EAST:
+    case Direction8Points.EAST:
       return { x: position.x + 1, y: position.y };
-    case Direction4Points.SOUTH:
+    case Direction8Points.SOUTH:
       return { x: position.x, y: position.y + 1 };
-    case Direction4Points.WEST:
+    case Direction8Points.WEST:
       return { x: position.x - 1, y: position.y };
+    case Direction8Points.NORTHWEST:
+      return { x: position.x - 1, y: position.y - 1 };
+    case Direction8Points.NORTHEAST:
+      return { x: position.x + 1, y: position.y - 1 };
+    case Direction8Points.SOUTHEAST:
+      return { x: position.x + 1, y: position.y + 1 };
+    case Direction8Points.SOUTHWEST:
+      return { x: position.x - 1, y: position.y + 1 };
     default:
       throw new Error('impossible direction');
   }
@@ -111,4 +140,29 @@ export const cellToString = (cell: Cell) => {
 
 export const createMoveString = (cell1: Cell, cell2: Cell) => {
   return `${cellToString(cell1)}-${cellToString(cell2)}`;
+};
+
+export const getAllPositions = (map: string[]): Cell[] => {
+  const size = getMapSize(map);
+  const positions: Cell[] = [];
+  for (let i = 0; i < size.width; ++i) {
+    for (let j = 0; j < size.height; ++j) {
+      positions.push({ x: i, y: j });
+    }
+  }
+  return positions;
+};
+
+export const drawOnMap = (
+  { x, y }: Cell,
+  map: MapLines,
+  characterToDraw: string = 'X'
+) => {
+  if (characterToDraw.length !== 1) {
+    throw new Error('must draw character with length 1');
+  }
+  const newLine =
+    map[y].substring(0, x) + characterToDraw + map[y].substring(x + 1);
+  map[y][x];
+  map[y] = newLine;
 };
