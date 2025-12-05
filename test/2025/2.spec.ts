@@ -1,9 +1,9 @@
+import { createRange } from '../../src/helpers/range';
 import {
   checkIsInvalidNumber,
   findAllInvalidIds,
   findInvalidIds,
   findSumOfAllInvalidIdsFromRanges,
-  getRangeBounds,
 } from '../../src/solutions/2025/2';
 
 import { describe, it, expect } from 'vitest';
@@ -44,8 +44,8 @@ const test_data_2 = {
 
 describe('day 2', () => {
   describe('part 1', () => {
-    it('gets min and max for a range', (range) => {
-      const { min, max } = getRangeBounds('11-22');
+    it('gets min and max for a range', () => {
+      const { min, max } = createRange('11-22');
       expect(min).toBe(11);
       expect(max).toBe(22);
     });
@@ -61,7 +61,7 @@ describe('day 2', () => {
     it.each(test_data_1.spans)(
       'finds invalid ranges: %s',
       ({ range: rangeString, invalidIds }) => {
-        const range = getRangeBounds(rangeString);
+        const range = createRange(rangeString);
         const set = new Set<number>();
         const foundInvalidIds = findInvalidIds(range, set);
         expect([...foundInvalidIds]).toEqual(invalidIds);
@@ -70,13 +70,13 @@ describe('day 2', () => {
 
     it('only adds a certain id once even if its in two ranges', () => {
       const rangesString = ['11-22', '22-22'];
-      const ranges = rangesString.map((rs) => getRangeBounds(rs));
+      const ranges = rangesString.map((rs) => createRange(rs));
       const allInvalidIds = findAllInvalidIds(ranges);
       expect(allInvalidIds).toEqual([11, 22]);
     });
 
     it('finds sum of invalid ids', () => {
-      const ranges = test_data_1.spans.map((s) => getRangeBounds(s.range));
+      const ranges = test_data_1.spans.map((s) => createRange(s.range));
       const sum = findSumOfAllInvalidIdsFromRanges(ranges);
       expect(sum).toEqual(test_data_1.expectedTotal);
     });
@@ -94,7 +94,7 @@ describe('day 2', () => {
     it.each(test_data_2.spans)(
       'finds invalid ranges: %s',
       ({ range: rangeString, invalidIds }) => {
-        const range = getRangeBounds(rangeString);
+        const range = createRange(rangeString);
         const set = new Set<number>();
         const foundInvalidIds = findInvalidIds(range, set, true);
         expect([...foundInvalidIds]).toEqual(invalidIds);
@@ -102,7 +102,7 @@ describe('day 2', () => {
     );
 
     it('finds sum of invalid ids', () => {
-      const ranges = test_data_2.spans.map((s) => getRangeBounds(s.range));
+      const ranges = test_data_2.spans.map((s) => createRange(s.range));
       const sum = findSumOfAllInvalidIdsFromRanges(ranges, true);
       expect(sum).toEqual(test_data_2.expectedTotal);
     });

@@ -1,14 +1,10 @@
+import { Range, createRange } from '../../helpers/range';
 import { readInput } from '../../helpers/readFile';
-
-interface Range {
-  min: number;
-  max: number;
-}
 
 export const solution_2025_2_1 = async () => {
   const input = await readInput('../data/2025/2_input.txt');
   const rawRanges = input.split(',');
-  const ranges = rawRanges.map((rangeString) => getRangeBounds(rangeString));
+  const ranges = rawRanges.map((rangeString) => createRange(rangeString));
   const sum = findSumOfAllInvalidIdsFromRanges(ranges);
   return sum;
 };
@@ -16,19 +12,12 @@ export const solution_2025_2_1 = async () => {
 export const solution_2025_2_2 = async () => {
   const input = await readInput('../data/2025/2_input.txt');
   const rawRanges = input.split(',');
-  const ranges = rawRanges.map((rangeString) => getRangeBounds(rangeString));
+  const ranges = rawRanges.map((rangeString) => createRange(rangeString));
   const sum = findSumOfAllInvalidIdsFromRanges(ranges, true);
   return sum;
 };
 
-export const getRangeBounds = (range: string) => {
-  const [min, max] = range.split('-');
-  return { min: Number(min), max: Number(max) };
-};
-
-/**
- * MUTATION ALERT - set is modified inplace
- */
+/** Note: set is mutated in-place */
 export const findInvalidIds = (
   range: Range,
   set: Set<number>,
