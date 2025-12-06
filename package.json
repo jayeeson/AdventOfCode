@@ -17,6 +17,6 @@
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "start": "ts-node src/index.ts",
-    "newaoc": "bash ./src/script/newaoc.sh"
+    "day": "bash ./src/script/newaoc.sh"
   }
 }
