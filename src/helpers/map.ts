@@ -138,6 +138,12 @@ export const cellToString = (cell: Cell) => {
   return `${cell.x}-${cell.y}`;
 };
 
+/** Does not validate input */
+export const stringToCell = (input: string): Cell => {
+  const [x, y] = input.split('-');
+  return { x: Number(x), y: Number(y) };
+};
+
 export const createMoveString = (cell1: Cell, cell2: Cell) => {
   return `${cellToString(cell1)}-${cellToString(cell2)}`;
 };
