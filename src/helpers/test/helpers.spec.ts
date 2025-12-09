@@ -1,4 +1,4 @@
-import { doInPlaceArrayItemSwap } from '../arrayItemSwap';
+import { doInPlaceArrayItemSwap } from '../array';
 import { createFrequencyMap } from '../createFrequencyMap';
 import {
   readInput,

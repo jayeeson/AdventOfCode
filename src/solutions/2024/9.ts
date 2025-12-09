@@ -1,5 +1,5 @@
 import { File } from 'buffer';
-import { doInPlaceArrayItemSwap } from '../../helpers/arrayItemSwap';
+import { doInPlaceArrayItemSwap } from '../../helpers/array';
 import { readInput } from '../../helpers/readFile';
 
 export interface Block {

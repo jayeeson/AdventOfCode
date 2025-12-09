@@ -1,4 +1,4 @@
-import { doInPlaceArrayItemSwap } from '../../helpers/arrayItemSwap';
+import { doInPlaceArrayItemSwap } from '../../helpers/array';
 import { readInput, readLinesIntoLists } from '../../helpers/readFile';
 import { sumOfArray } from './1';
 
