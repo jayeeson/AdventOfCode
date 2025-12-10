@@ -6,7 +6,7 @@ import {
   readNumbersIntoTwoLists,
 } from '../readFile';
 
-import { describe, it, expect } from 'vitest';
+import { it, expect } from 'vitest';
 
 it('readinput works for one line', async () => {
   const input = await readInput('helpers/test/test-data/oneline_data.txt');

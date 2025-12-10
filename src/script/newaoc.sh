@@ -11,7 +11,8 @@ function newaoc() {
   root=$(git rev-parse --show-toplevel)
 
   mkdir -p $root/data/$year
-  touch $root/data/$year/${daynum}_input.txt
+  datafile=$root/data/$year/${daynum}_input.txt
+  touch $datafile
 
  
   mkdir -p $root/src/solutions/$year/
@@ -46,6 +47,10 @@ describe('day $daynum $year', () => {
 EOF
 
   echo "Created files for Advent of Code $year Day $daynum"
+
+  code $codefile
+  code $specfile
+  code $datafile
 }
 
 newaoc $1

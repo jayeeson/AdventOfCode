@@ -20,6 +20,8 @@ export interface Cell {
   y: number;
 }
 
+export type CellTuple = [Cell, Cell];
+
 export type MapLines = string[];
 
 export enum Direction4Points {
@@ -131,7 +133,29 @@ export const getDirectionFromNeighboringCell1ToCell2 = (
   if (diffY === -1) {
     return Direction4Points.NORTH;
   }
-  throw new Error('you did something WRONG');
+  throw new Error('you did something wrong');
+};
+
+export const getAdjacentCellDirection = (
+  cell1: Cell,
+  cell2: Cell
+): Direction4Points => {
+  const diffX = cell2.x - cell1.x;
+  if (diffX > 0) {
+    return Direction4Points.EAST;
+  }
+  if (diffX < 0) {
+    return Direction4Points.WEST;
+  }
+
+  const diffY = cell2.y - cell1.y;
+  if (diffY > 0) {
+    return Direction4Points.SOUTH;
+  }
+  if (diffY < 0) {
+    return Direction4Points.NORTH;
+  }
+  throw new Error('you did something wrong, cells are supposed to be adjacent');
 };
 
 export const cellToString = (cell: Cell) => {
@@ -139,8 +163,8 @@ export const cellToString = (cell: Cell) => {
 };
 
 /** Does not validate input */
-export const stringToCell = (input: string): Cell => {
-  const [x, y] = input.split('-');
+export const stringToCell = (input: string, delimiter: string = '-'): Cell => {
+  const [x, y] = input.split(delimiter);
   return { x: Number(x), y: Number(y) };
 };
 
@@ -172,3 +196,76 @@ export const drawOnMap = (
   map[y][x];
   map[y] = newLine;
 };
+
+/** sorts in place */
+export function sortCoordinatesByIncreasingX(coordinates: Cell[]): Cell[] {
+  const compareFunction = (a: Cell, b: Cell) => a.x - b.x;
+  const sorted = coordinates.sort(compareFunction);
+  return sorted;
+}
+
+export function findTopRightCornerCell(tiles: Cell[]) {
+  let currentTopRightCellIndex: number = 0;
+  if (tiles.length === 1) {
+    return {
+      index: 0,
+      cell: tiles[0],
+    };
+  }
+
+  for (let i = 1; i < tiles.length; ++i) {
+    const delta = getCellDiff(tiles[i], tiles[currentTopRightCellIndex]);
+    if (delta.x <= 0 && delta.y >= 0) {
+      currentTopRightCellIndex = i;
+    }
+  }
+
+  return {
+    index: currentTopRightCellIndex,
+    cell: tiles[currentTopRightCellIndex],
+  };
+}
+
+export function isCellInArea(cell: Cell, area: [Cell, Cell]) {
+  const delta = getCellDiff(area[0], area[1]);
+  if (delta.x < 0) {
+    if (delta.y < 0) {
+      return (
+        area[0].x >= cell.x &&
+        area[1].x <= cell.x &&
+        area[0].y >= cell.y &&
+        area[1].y <= cell.y
+      );
+    }
+    return (
+      area[0].x >= cell.x &&
+      area[1].x <= cell.x &&
+      area[0].y <= cell.y &&
+      area[1].y >= cell.y
+    );
+  }
+  if (delta.y < 0) {
+    return (
+      area[0].x <= cell.x &&
+      area[1].x >= cell.x &&
+      area[0].y >= cell.y &&
+      area[1].y <= cell.y
+    );
+  }
+  return (
+    area[0].x <= cell.x &&
+    area[1].x >= cell.x &&
+    area[0].y <= cell.y &&
+    area[1].y >= cell.y
+  );
+}
+
+export function isCellEqual(cell1: Cell, cell2: Cell) {
+  const delta = getCellDiff(cell1, cell2);
+  return delta.x === 0 && delta.y === 0;
+}
+
+export function isCellOneAwayIn4CardinalDirections(cell1: Cell, cell2: Cell) {
+  const delta = getCellDiff(cell1, cell2);
+  return Math.abs(delta.x) + Math.abs(delta.y) === 1;
+}
