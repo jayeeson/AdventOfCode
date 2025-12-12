@@ -43,3 +43,26 @@ export function partition<
 
   return result;
 }
+
+type Primitive = string | number | boolean;
+export function isArrayEqual<T extends Primitive>(arr1: T[], arr2: T[]) {
+  if (arr1 === arr2) {
+    return true;
+  }
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+  for (let i = 0; i < arr1.length; ++i) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+export function addArrayItemLengths<T extends Array<any>>(arr: T) {
+  return arr.reduce((acc, cur) => {
+    acc += cur.length;
+    return acc;
+  }, 0);
+}
