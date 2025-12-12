@@ -24,6 +24,18 @@ export type CellTuple = [Cell, Cell];
 
 export type MapLines = string[];
 
+export type Line = [Cell, Cell];
+export interface LineWithInsideDirection {
+  line: Line;
+  insideDirection: Direction4Points | undefined;
+}
+export type LooseLineWithInsideDirection = Omit<
+  LineWithInsideDirection,
+  'line'
+> & {
+  line: Line | undefined;
+};
+
 export enum Direction4Points {
   NORTH,
   EAST,
@@ -268,4 +280,236 @@ export function isCellEqual(cell1: Cell, cell2: Cell) {
 export function isCellOneAwayIn4CardinalDirections(cell1: Cell, cell2: Cell) {
   const delta = getCellDiff(cell1, cell2);
   return Math.abs(delta.x) + Math.abs(delta.y) === 1;
+}
+
+/** Shape must close, i.e. last cell must be adjacent to the first cell */
+export function createLinesForClosedPath(adjacentCells: Cell[]): Line[] {
+  const lines: Line[] = [];
+  for (let i = 0; i < adjacentCells.length; ++i) {
+    const iPlus1 = (i + 1) % adjacentCells.length;
+    const line: Line = [adjacentCells[i], adjacentCells[iPlus1]];
+    lines.push(line);
+  }
+  return lines;
+}
+
+export function removeCornersFromRectangleLines(
+  rectLines: Line[]
+): Array<Line | undefined> {
+  const lines: Array<Line | undefined> = [];
+
+  for (let i = 0; i < rectLines.length; ++i) {
+    const line = rectLines[i];
+    if (getLineLength(line) <= 2) {
+      lines.push(undefined);
+    }
+
+    const [cell1, cell2] = line;
+    const direction = getLineDirection(line);
+
+    switch (direction) {
+      case Direction4Points.NORTH:
+        lines.push([
+          { x: cell1.x, y: cell1.y - 1 },
+          { x: cell2.x, y: cell2.y + 1 },
+        ]);
+        break;
+      case Direction4Points.SOUTH:
+        lines.push([
+          { x: cell1.x, y: cell1.y + 1 },
+          { x: cell2.x, y: cell2.y - 1 },
+        ]);
+        break;
+      case Direction4Points.EAST:
+        lines.push([
+          { x: cell1.x + 1, y: cell1.y },
+          { x: cell2.x - 1, y: cell2.y },
+        ]);
+        break;
+      case Direction4Points.WEST:
+        lines.push([
+          { x: cell1.x - 1, y: cell1.y },
+          { x: cell2.x + 1, y: cell2.y },
+        ]);
+        break;
+      default:
+        throw new Error(
+          'removeCornersFromRectangleLines: Rectangle must point in 1 of 4 cardinal directions'
+        );
+    }
+  }
+  return lines;
+}
+
+export function getLineDirection(line: Line): Direction4Points {
+  return getAdjacentCellDirection(line[0], line[1]);
+}
+
+export function getLineLength(line: Line): number {
+  const delta = getCellDiff(line[0], line[1]);
+  if (delta.x !== 0 && delta.y !== 0) {
+    throw new Error(
+      'getLineLength: Lines must point in 1 of the 4 cardinal directions!'
+    );
+  }
+  return Math.abs(delta.x) + Math.abs(delta.y) + 1;
+}
+
+export function addDirectionsToClosedPathLines(
+  lines: Line[]
+): LineWithInsideDirection[] {
+  const linesWithDirections: LineWithInsideDirection[] = [];
+  for (let i = 0; i < lines.length; ++i) {
+    const iPlus1 = (i + 1) % lines.length;
+    const insideDirection =
+      lines.length === 1 || isCellEqual(lines[iPlus1][0], lines[iPlus1][1])
+        ? undefined
+        : getLineDirection(lines[iPlus1]);
+    linesWithDirections.push({
+      line: lines[i],
+      insideDirection,
+    });
+  }
+  return linesWithDirections;
+}
+
+export const isLineWithInsideDirection = (
+  line: LooseLineWithInsideDirection
+): line is LineWithInsideDirection => {
+  return line.line !== undefined;
+};
+
+/** @returns  true if parallel, false if orthogonal */
+export function areDirectionsParallel(
+  direction1: Direction4Points | undefined,
+  direction2: Direction4Points | undefined
+): boolean | undefined {
+  if (direction1 === undefined || direction2 === undefined) {
+    return undefined;
+  }
+
+  const directionSum = direction1 + direction2;
+  if (directionSum % 2 === 0) {
+    return true;
+  }
+}
+
+export function reverseLine(direction: Direction4Points): Direction4Points {
+  return (direction + 2) % 4;
+}
+
+export function isLineACell(line: Line) {
+  if (line === undefined) {
+    console.log(line);
+  }
+  return isCellEqual(line[0], line[1]);
+}
+
+export function isCellInLine(cell: Cell, line: Line): boolean {
+  const direction = getLineDirection(line);
+  switch (direction) {
+    case Direction4Points.NORTH:
+      return cell.x === line[0].x && line[0].y >= cell.y && cell.y >= line[1].y;
+    case Direction4Points.SOUTH:
+      return cell.x === line[0].x && line[0].y <= cell.y && cell.y <= line[1].y;
+    case Direction4Points.EAST:
+      return cell.y === line[0].y && line[0].x <= cell.x && cell.x <= line[1].x;
+    case Direction4Points.WEST:
+      return cell.y === line[0].y && line[0].x >= cell.x && cell.x >= line[1].x;
+    default:
+      throw new Error('line must have a direction');
+  }
+}
+
+export function determineIfLinesIntersect(line1: Line, line2: Line): boolean {
+  const lineDirection1 = isLineACell(line1)
+    ? undefined
+    : getAdjacentCellDirection(line1[0], line1[1]);
+  const lineDirection2 = isLineACell(line2)
+    ? undefined
+    : getAdjacentCellDirection(line2[0], line2[1]);
+
+  if (areDirectionsParallel(lineDirection1, lineDirection2)) {
+    return false;
+  }
+
+  const handleCaseWhereOneOrBothLinesAreCells = () => {
+    if (lineDirection1 === undefined) {
+      if (lineDirection2 === undefined) {
+        return isCellEqual(line1[0], line2[0]);
+      }
+      return isCellInLine(line1[0], line2);
+    }
+
+    if (lineDirection2 === undefined) {
+      if (lineDirection1 === undefined) {
+        return isCellEqual(line2[0], line1[0]);
+      }
+      return isCellInLine(line2[0], line1);
+    }
+    return null;
+  };
+
+  const edgeCase = handleCaseWhereOneOrBothLinesAreCells();
+  if (edgeCase !== null) {
+    return edgeCase;
+  }
+
+  interface Info {
+    stableX: number;
+    yMin: number;
+    yMax: number;
+    stableY: number;
+    xMin: number;
+    xMax: number;
+  }
+
+  const { xMin, xMax, stableX, yMin, yMax, stableY } = [
+    { line: line1, direction: lineDirection1 },
+    { line: line2, direction: lineDirection2 },
+  ].reduce((acc, { line, direction }) => {
+    if (direction! % 2 === 0) {
+      // N/S
+      acc['stableX'] = line[0].x;
+      acc['yMin'] = Math.min(line[0].y, line[1].y);
+      acc['yMax'] = Math.max(line[0].y, line[1].y);
+      return acc;
+    }
+    // E/W
+    acc['stableY'] = line[0].y;
+    acc['xMin'] = Math.min(line[0].x, line[1].x);
+    acc['xMax'] = Math.max(line[0].x, line[1].x);
+    return acc;
+  }, {} as Info);
+
+  return (
+    xMin <= stableX && stableX <= xMax && yMin <= stableY && stableY <= yMax
+  );
+}
+
+export function createRectangleFromTwoCorners(
+  cell1: Cell,
+  cell2: Cell
+): Cell[] {
+  if (cell1.x === cell2.x && cell1.y === cell2.y) {
+    return [{ x: cell1.x, y: cell1.y }];
+  }
+  if (cell1.x === cell2.x) {
+    return [
+      { x: cell1.x, y: cell1.y },
+      { x: cell1.x, y: cell2.y },
+    ];
+  }
+  if (cell1.y === cell2.y) {
+    return [
+      { x: cell1.x, y: cell1.y },
+      { x: cell2.x, y: cell1.y },
+    ];
+  }
+  return [
+    { x: cell1.x, y: cell1.y },
+    { x: cell2.x, y: cell1.y },
+    { x: cell2.x, y: cell2.y },
+    { x: cell1.x, y: cell2.y },
+  ];
 }

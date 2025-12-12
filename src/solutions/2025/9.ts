@@ -1,16 +1,28 @@
 import {
+  addDirectionsToClosedPathLines,
   Cell,
   cellToString,
+  createLinesForClosedPath,
+  createRectangleFromTwoCorners,
+  determineIfLinesIntersect,
   Direction4Points,
   findTopRightCornerCell,
   getAdjacentCellDirection,
   getCellDiff,
   getCellOneAwayByDirection,
-  isCellEqual,
+  getLineDirection,
   isCellInArea,
+  isCellInLine,
   isCellOneAwayIn4CardinalDirections,
+  isLineACell,
+  Line,
+  removeCornersFromRectangleLines,
+  reverseLine,
   sortCoordinatesByIncreasingX,
   stringToCell,
+  isLineWithInsideDirection,
+  LooseLineWithInsideDirection,
+  LineWithInsideDirection,
 } from '../../helpers/map';
 import { readInput, splitStringAtEOL } from '../../helpers/readFile';
 
@@ -22,7 +34,7 @@ export async function solution_2025_9_1() {
   return largestArea;
 }
 
-export async function solution_2025_9_2() {
+export async function solution_2025_9_2_slow() {
   const input = await readInput('../data/2025/9_input.txt');
   const redTileCoordinates = convertInputToRedTileCoordinates(input);
   const cornerCell = findTopRightCornerCell(redTileCoordinates);
@@ -30,9 +42,20 @@ export async function solution_2025_9_2() {
     redTileCoordinates,
     cornerCell.index
   );
-  const largestArea = findLargestAreaWithoutCrossingBorder(
+  const largestArea = findLargestAreaWithoutCrossingBorderSlow(
     redTileCoordinates,
     exitBorderMap
+  );
+  return largestArea;
+}
+
+export async function solution_2025_9_2() {
+  const input = await readInput('../data/2025/9_input.txt');
+  const redTiles = convertInputToRedTileCoordinates(input);
+  const borderLines = createLinesForClosedPath(redTiles);
+  const largestArea = findLargestAreaWithoutCrossingBorderFast(
+    redTiles,
+    borderLines
   );
   return largestArea;
 }
@@ -134,18 +157,13 @@ export function createExitBorderMapObject(
   return borderMap;
 }
 
-export function findLargestAreaWithoutCrossingBorder(
+export function findLargestAreaWithoutCrossingBorderSlow(
   tiles: Cell[],
   exitBorderMap: ExitBorderMap
 ): number {
   let maxArea = 0;
   for (let i = 0; i < tiles.length; ++i) {
-    console.log(`Tile ${i} of ${tiles.length}`);
     for (let j = tiles.length - 1; j > i; --j) {
-      console.log(
-        `Tile ${i}/${tiles.length}, Subtile ${tiles.length - j}/${tiles.length}`
-      );
-
       const tile1 = tiles[i];
       const tile2 = tiles[j];
       const delta = getCellDiff(tile1, tile2);
@@ -183,6 +201,78 @@ export function findLargestAreaWithoutCrossingBorder(
       }
 
       if (!invalid) {
+        maxArea = area;
+      }
+    }
+  }
+
+  return maxArea;
+}
+
+export function findLargestAreaWithoutCrossingBorderFast(
+  redTiles: Cell[],
+  borderLines: Line[]
+): number {
+  let maxArea = 0;
+  for (let i = 0; i < redTiles.length; ++i) {
+    for (let j = redTiles.length - 1; j > i; --j) {
+      const tile1 = redTiles[i];
+      const tile2 = redTiles[j];
+      const delta = getCellDiff(tile1, tile2);
+      const area = (Math.abs(delta.x) + 1) * (Math.abs(delta.y) + 1);
+
+      if (area <= maxArea) {
+        continue;
+      }
+
+      const rectangle = createRectangleFromTwoCorners(tile1, tile2);
+      const rectangleLines = createLinesForClosedPath(rectangle);
+      const rectangleLinesWithInsideDirections =
+        addDirectionsToClosedPathLines(rectangleLines);
+      const rectangleWithoutCorners =
+        removeCornersFromRectangleLines(rectangleLines);
+
+      const rectangleNoCornersWithLines: LineWithInsideDirection[] =
+        rectangleLinesWithInsideDirections
+          .map<LooseLineWithInsideDirection>((arr, index) => ({
+            insideDirection: arr.insideDirection,
+            line: rectangleWithoutCorners[index],
+          }))
+          .filter(isLineWithInsideDirection);
+
+      let isBadArea = false;
+      for (const rectangleLineWithDir of rectangleNoCornersWithLines) {
+        for (let k = 0; k < borderLines.length && !isBadArea; ++k) {
+          const intersects = determineIfLinesIntersect(
+            rectangleLineWithDir.line,
+            borderLines[k]
+          );
+          if (
+            !intersects ||
+            rectangleLineWithDir.insideDirection === undefined
+          ) {
+            continue;
+          }
+
+          const borderLineDirection = getLineDirection(borderLines[k]);
+          const mustReverseBorder =
+            !isLineACell(rectangleLineWithDir.line) &&
+            isCellInLine(borderLines[k][1], rectangleLineWithDir.line);
+
+          const properBorderLine = mustReverseBorder
+            ? reverseLine(borderLineDirection)
+            : borderLineDirection;
+
+          const isBorderLineGoingInsideArea =
+            rectangleLineWithDir.insideDirection === properBorderLine;
+
+          if (isBorderLineGoingInsideArea) {
+            isBadArea = true;
+          }
+        }
+      }
+
+      if (!isBadArea) {
         maxArea = area;
       }
     }
